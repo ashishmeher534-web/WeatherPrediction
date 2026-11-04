@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherVision | Weather Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">☁</div>
+            <div>
+                <h2>Weather<span>Vision</span></h2>
+                <small>SMART WEATHER SYSTEM</small>
+            </div>
+        </div>
+
+        <p class="menu-label">MENU</p>
+
+        <nav>
+            <a href="/" class="nav-link active">▦ &nbsp; Dashboard</a>
+            <a href="#weather-details" class="nav-link">☀ &nbsp; Current Weather</a>
+            <a href="#forecast" class="nav-link">◷ &nbsp; Hourly Forecast</a>
+            <a href="#prediction" class="nav-link">✦ &nbsp; Rain Prediction</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="mini-weather">🌤️</div>
+            <h3>Weather at a glance</h3>
+            <p>Live weather information for your selected city.</p>
+            <small>POWERED BY OPEN-METEO</small>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">WEATHER INTELLIGENCE</p>
+                <h1>Weather Dashboard</h1>
+                <p class="subtitle">Explore current conditions in your city.</p>
+            </div>
+
+            <div class="status-pill">
+                <span class="status-dot"></span>
+                Live Weather
+            </div>
+        </header>
+
+        <section class="search-panel">
+            <div class="search-copy">
+                <h2>Find your city's weather</h2>
+                <p>Search any city to view its latest weather conditions.</p>
+            </div>
+
+            <form id="search-form" class="search-form">
+                <span class="search-icon">⌕</span>
+                <input
+                    type="text"
+                    id="city-input"
+                    placeholder="Enter city name..."
+                    value="Bilaspur"
+                    minlength="2"
+                    required
+                >
+                <button type="submit" id="search-button">Search Weather ↗</button>
+            </form>
+        </section>
+
+        <div id="message" class="message" role="status" aria-live="polite">
+            Connecting to live weather service...
+        </div>
+
+        <section class="weather-hero" id="weather-details">
+            <div class="hero-info">
+                <p class="eyebrow">CURRENT CONDITIONS</p>
+                <h2 id="city-name">Loading city...</h2>
+                <p id="weather-description">Fetching weather information</p>
+                <div class="temperature">
+                    <span id="temperature">--</span><sup>°C</sup>
+                </div>
+                <p class="feels-like">
+                    Feels like <strong id="feels-like">--°C</strong>
+                </p>
+                <p class="updated-time" id="updated-time">Waiting for weather data</p>
+            </div>
+
+            <div class="hero-illustration" id="weather-icon" aria-label="Weather icon">
+                🌤️
+            </div>
+
+            <div class="hero-location">
+                <span>📍</span>
+                <span id="location-label">Your selected location</span>
+            </div>
+        </section>
+
+        <section class="section-block">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">WEATHER METRICS</p>
+                    <h2>Today's Overview</h2>
+                </div>
+                <span class="live-tag">● LIVE DATA</span>
+            </div>
+
+            <div class="metrics-grid">
+                <article class="metric-card">
+                    <div class="metric-top">
+                        <span>Humidity</span>
+                        <span class="metric-icon">💧</span>
+                    </div>
+                    <h3 id="humidity">--<small>%</small></h3>
+                    <p>Relative humidity</p>
+                </article>
+
+                <article class="metric-card">
+                    <div class="metric-top">
+                        <span>Wind Speed</span>
+                        <span class="metric-icon">💨</span>
+                    </div>
+                    <h3 id="wind-speed">--<small> km/h</small></h3>
+                    <p>Current wind speed</p>
+                </article>
+
+                <article class="metric-card">
+                    <div class="metric-top">
+                        <span>Cloud Cover</span>
+                        <span class="metric-icon">☁️</span>
+                    </div>
+                    <h3 id="cloud-cover">--<small>%</small></h3>
+                    <p>Sky coverage</p>
+                </article>
+
+                <article class="metric-card">
+                    <div class="metric-top">
+                        <span>Precipitation</span>
+                        <span class="metric-icon">🌧️</span>
+                    </div>
+                    <h3 id="precipitation">--<small> mm</small></h3>
+                    <p>Current precipitation</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section-block" id="forecast">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">UPCOMING CONDITIONS</p>
+                    <h2>Hourly Forecast</h2>
+                </div>
+                <span class="forecast-note">Next available hours</span>
+            </div>
+
+            <div class="forecast-grid" id="forecast-grid">
+                <div class="forecast-card">Loading forecast...</div>
+            </div>
+        </section>
+
+        <section class="section-block" id="prediction">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">MACHINE LEARNING</p>
+                    <h2>Rain Prediction</h2>
+                </div>
+            </div>
+
+            <div class="prediction-panel">
+                <div class="prediction-symbol">✦</div>
+                <div class="prediction-copy">
+                    <h3>Rain probability analysis</h3>
+                    <p>
+                        This section will display a rain probability estimate
+                        from our prediction model in a later project step.
+                    </p>
+                </div>
+                <div class="prediction-status" id="prediction-status">
+                    Model setup pending
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <span>WeatherVision · Weather Prediction System</span>
+            <span>Weather data: Open-Meteo</span>
+        </footer>
+
+    </main>
+</div>
+
+<script>
+const form = document.getElementById("search-form");
+const cityInput = document.getElementById("city-input");
+const searchButton = document.getElementById("search-button");
+const message = document.getElementById("message");
+
+function displayValue(value, suffix = "") {
+    if (value === null || value === undefined || value === "") {
+        return "--";
+    }
+    return `${value}${suffix}`;
+}
+
+function weatherEmoji(code, isDay) {
+    if (code === 0) return isDay ? "☀️" : "🌙";
+    if ([1, 2, 3].includes(code)) return "🌤️";
+    if ([45, 48].includes(code)) return "🌫️";
+    if ([51, 53, 55, 56, 57].includes(code)) return "🌦️";
+    if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return "🌧️";
+    if ([71, 73, 75, 77, 85, 86].includes(code)) return "❄️";
+    if ([95, 96, 99].includes(code)) return "⛈️";
+    return "🌡️";
+}
+
+async function loadWeather(city) {
+    message.textContent = "Fetching live weather...";
+    message.className = "message";
+    searchButton.disabled = true;
+    searchButton.textContent = "Loading...";
+
+    try {
+        const response = await fetch(
+            `/api/weather?city=${encodeURIComponent(city)}`
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "Could not load weather.");
+        }
+
+        const current = data.current;
+
+        document.getElementById("city-name").textContent = data.city;
+        document.getElementById("location-label").textContent =
+            [data.region, data.country].filter(Boolean).join(", ");
+
+        document.getElementById("weather-description").textContent =
+            data.description || "Conditions unavailable";
+
+        document.getElementById("temperature").textContent =
+            displayValue(current.temperature_2m);
+
+        document.getElementById("feels-like").textContent =
+            displayValue(current.apparent_temperature, "°C");
+
+        document.getElementById("humidity").innerHTML =
+            `${displayValue(current.relative_humidity_2m)}<small>%</small>`;
+
+        document.getElementById("wind-speed").innerHTML =
+            `${displayValue(current.wind_speed_10m)}<small> km/h</small>`;
+
+        document.getElementById("cloud-cover").innerHTML =
+            `${displayValue(current.cloud_cover)}<small>%</small>`;
+
+        document.getElementById("precipitation").innerHTML =
+            `${displayValue(current.precipitation)}<small> mm</small>`;
+
+        document.getElementById("weather-icon").textContent =
+            weatherEmoji(current.weather_code, current.is_day);
+
+        document.getElementById("updated-time").textContent =
+            `Weather observation: ${current.time || "Latest available"}`;
+
+        renderForecast(data.hourly, current.time);
+
+        message.textContent = `Weather successfully loaded for ${data.city}.`;
+        message.className = "message success";
+
+    } catch (error) {
+        message.textContent = error.message;
+        message.className = "message error";
+    } finally {
+        searchButton.disabled = false;
+        searchButton.textContent = "Search Weather ↗";
+    }
+}
+
+function renderForecast(hourly, currentTime) {
+    const container = document.getElementById("forecast-grid");
+    container.innerHTML = "";
+
+    if (!hourly || !hourly.time || !hourly.time.length) {
+        container.textContent = "Hourly forecast is unavailable.";
+        return;
+    }
+
+    let startIndex = hourly.time.findIndex(
+        time => time >= currentTime
+    );
+
+    if (startIndex < 0) startIndex = 0;
+
+    const endIndex = Math.min(startIndex + 6, hourly.time.length);
+
+    for (let i = startIndex; i < endIndex; i++) {
+        const time = hourly.time[i];
+        const hour = time.split("T")[1] || "";
+
+        const probability =
+            hourly.precipitation_probability?.[i];
+
+        const temperature = hourly.temperature_2m?.[i];
+        const code = hourly.weather_code?.[i];
+
+        const card = document.createElement("article");
+        card.className = "forecast-card";
+
+        const timeLabel = document.createElement("p");
+        timeLabel.className = "forecast-time";
+        timeLabel.textContent = hour || "—";
+
+        const icon = document.createElement("div");
+        icon.className = "forecast-icon";
+        icon.textContent = weatherEmoji(code, true);
+
+        const temp = document.createElement("h3");
+        temp.textContent = displayValue(temperature, "°C");
+
+        const rain = document.createElement("p");
+        rain.className = "forecast-rain";
+        rain.textContent = `Rain chance: ${displayValue(probability, "%")}`;
+
+        card.append(timeLabel, icon, temp, rain);
+        container.appendChild(card);
+    }
+}
+
+form.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const city = cityInput.value.trim();
+
+    if (city.length < 2) {
+        message.textContent = "Please enter at least two characters.";
+        message.className = "message error";
+        return;
+    }
+
+    loadWeather(city);
+});
+
+loadWeather(cityInput.value);
+</script>
+
+</body>
+</html>
