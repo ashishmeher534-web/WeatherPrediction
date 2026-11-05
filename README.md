@@ -40,6 +40,9 @@ GitHub Repository
 
 https://github.com/ashishmeher534-web/WeatherPrediction
 
-Author
+Team Members
 
-Ashish Meher
+1.Ashish Kumar Meher
+2.Sunil Harijan
+3.Dalesh Ghamforiya
+4.Ghanendra Sahu
